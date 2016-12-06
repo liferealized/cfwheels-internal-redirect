@@ -2,7 +2,7 @@
 
     <cffunction name="init" access="public" output="false">
         <cfscript>
-            this.version = "1.1.7,1.1.8,1.4.5";   
+            this.version = "1.1.7,1.1.8,1.4.5,2.0";
         </cfscript>
         <cfreturn this />
     </cffunction>
@@ -60,12 +60,12 @@
       <cfreturn this.response() />
     </cfif>
   </cffunction>
-  
+
   <cffunction name="sendExceptionEmail" returntype="void" access="public" output="false" mixin="application,dispatch">
     <cfargument name="exception" type="any" required="true">
     <cfargument name="eventName" type="any" required="true">
-    <cfscript>  
-      var loc = {}; 
+    <cfscript>
+      var loc = {};
       if (application.wheels.sendEmailOnError)
       {
         loc.mailArgs = {};
@@ -83,20 +83,20 @@
       }
     </cfscript>
   </cffunction>
-  
+
   <cffunction name="$runOnError" returntype="string" access="public" output="false" mixin="application,dispatch">
     <cfargument name="exception" type="any" required="true">
     <cfargument name="eventName" type="any" required="true">
     <cfscript>
       var loc = {};
-  
+
       if (StructKeyExists(application, "wheels") && StructKeyExists(application.wheels, "initialized"))
       {
         if (application.wheels.showErrorInformation)
         {
           if (StructKeyExists(arguments.exception, "rootCause") && Left(arguments.exception.rootCause.type, 6) == "Wheels")
             loc.wheelsError = arguments.exception.rootCause;
-          else if (StructKeyExists(arguments.exception, "cause") && StructKeyExists(arguments.exception.cause, "rootCause") && Left(arguments.exception.cause.rootCause.type, 6) == "Wheels") 
+          else if (StructKeyExists(arguments.exception, "cause") && StructKeyExists(arguments.exception.cause, "rootCause") && Left(arguments.exception.cause.rootCause.type, 6) == "Wheels")
             loc.wheelsError = arguments.exception.cause.rootCause;
           if (StructKeyExists(loc, "wheelsError"))
           {
@@ -121,5 +121,5 @@
     </cfscript>
     <cfreturn loc.returnValue>
   </cffunction>
-    
+
 </cfcomponent>
